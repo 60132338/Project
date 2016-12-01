@@ -143,5 +143,4 @@ router.get('/:id', function (req, res, next) {
         res.render('posts/show', { post: post });
     });
 });
-
 module.exports = router;
