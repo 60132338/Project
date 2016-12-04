@@ -5,7 +5,7 @@ block content
     if post.id
       h1.page-header 글수정
     else
-      h1.page-header 글쓰기
+      h1.page-header 호스팅하기
 
     form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST')
       .form-group

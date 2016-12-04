@@ -4,7 +4,12 @@ var router = express.Router();
 
 function needAuth(req, res, next) {
     if (req.session.user) {
-      next();
+      if(req.session.user.email === "root@root.com"){
+        next();
+      }else{
+        req.flash('danger','관리자가 아닙니다.');
+        res.redirect('back');
+      }
     } else {
       req.flash('danger', '로그인이 필요합니다.');
       res.redirect('/signin');
