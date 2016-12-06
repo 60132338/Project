@@ -9,11 +9,26 @@ block content
 
     form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST')
       .form-group
-        label(for='title') Title
+        label(for='title') 제목
         input.form-control(type='text', id='title', name='title', placeholder='title', value=post.title)
       .form-group
-        label(for='content') Content
+        label(for='city') 도시
+        input.form-control(type='text', id='city', name='city', placeholder='city', value=post.city)
+      .form-group
+        label(for='address') 주소
+        input.form-control(type='text', id='address', name='address', placeholder='address', value=post.address)
+      .form-group
+        label(for='fee') 숙소요금
+        input.form-control(type='number', id='fee', name='fee', placeholder='fee', value=post.fee)
+      .form-group
+        label(for='convenient') 편의시설
+        textarea.form-control(id='convenient', rows='2', name='convenient', placeholder='convenient here')=post.convenient
+      .form-group
+        label(for='content') 설명
         textarea.form-control(id='content', rows='10', name='content', placeholder='content here')= post.content
+      .form-group
+        label(for='rule') 이용규칙
+        textarea.form-control(id='rule', rows='10', name='rule', placeholder='rule here')= post.rule
 
       div.form-actions
         a.btn.btn-default(href='javascript:window.history.back();') 뒤로 

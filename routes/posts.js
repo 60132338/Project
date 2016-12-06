@@ -1,8 +1,16 @@
 var express = require('express'),
-    Uesr = require('../models/User'),
+    User = require('../models/User'),
     Post = require('../models/Post');
 var router = express.Router();
 
+function needAuth(req, res, next) {
+    if (req.session.user) {
+      next();
+    } else {
+      req.flash('danger', '로그인이 필요합니다.');
+      res.redirect('/signin');
+    }
+}
 
 //function needAuth(req, res, next) {
  //   if (req.session.user.email === post.email) {
@@ -15,10 +23,26 @@ var router = express.Router();
 /** form 안에 필수로 작성되야할 부분이 데이터가 있는지 확인. */
 function validateForm(form) {
     var title = form.title || "";
+    var city = form.city || "";
+    var address = form.address || "";
+    var fee = form.fee || "";
+
     title = title.trim();
+    city = city.trim();
+    address = address.trim();
+    fee = fee.trim();
 
     if (!title) {
         return '이름을 입력해주세요.';
+    }
+    if(!city){
+        return '도시를 입력해주세요.';
+    }
+    if(!address){
+        return '주소를 입력해주세요.';
+    }
+    if(!fee){
+        return '요금을 입력해주세요.';
     }
 
     return null;
@@ -35,7 +59,7 @@ router.get('/', function (req, res, next) {
 });
 
 /** 게시물 생성 */
-router.get('/new', function (req, res, next) {
+router.get('/new',needAuth ,function (req, res, next) {
     Post.find({}, function (err, post) {
         if (err) {
             return next(err);
@@ -56,6 +80,11 @@ router.post('/', function (req, res, next) {
         var createPost = new Post({
             title: req.body.title,
             email: req.session.user.email,
+            city: req.body.city,
+            address: req.body.address,
+            fee: req.body.fee,
+            convenient: req.body.convenient,
+            rule: req.body.rule,
             content: req.body.content
         });
 
@@ -73,12 +102,6 @@ router.post('/', function (req, res, next) {
 /** 게시물 수정 */
 router.get('/:id/edit', function (req, res, next) {
     Post.findById(req.params.id, function (err, post) {
-        if (req.session.user.email === post.email) {
-            next();
-        } else {
-            //req.flash('danger', '권한이 없습니다.');
-            res.redirect('back');
-        }
         if (err) {
             return next(err);
         }
@@ -100,12 +123,14 @@ router.put('/:id', function (req, res, next) {
         if (!post) {
             return res.redirect('back');
         }
-        // 수정시 원래 작성한 비밀번호와 다를시 수정이 되지 않음.
-        //if (post.password !== req.body.password) {
-        //    return res.redirect('back');
-        //}
+        
         post.title = req.body.title;
         post.content = req.body.content;
+        post.city = req.body.city;
+        post.address = req.body.address;
+        post.fee = req.body.fee;
+        post.convenient = req.body.convenient;
+        post.rule = req.body.rule;
 
         post.save(function (err) {
             if (err) {

@@ -4,10 +4,13 @@ var mongoose = require('mongoose'),
 var schema = new Schema({
     email: {type: String, required: true, index:true, trim: true}, // 이메일
     
-    title: {type: String, required: true, trim: true}, // 글제목
-    //지역
-    //
-    content: {type: String, required: true}, // 글내용
+    title: {type: String, required: true, trim: true}, //제목
+    city: {type: String, required:true, trim: true}, //도시
+    address: {type: String, required:true, trim: true}, //주소
+    fee: {type: Number, required:true, trim: true}, //숙소요금
+    convenient: {type: String, required: true, trim: true},//편의시설
+    content: {type: String, required: true}, // 간단한 설명
+    rule: {type: String, required: true}, //이용규칙
     read: {type: Number, default: 0}, // 조회수
     createdAt: {type: Date, default: Date.now} // 작성시간
 }, {

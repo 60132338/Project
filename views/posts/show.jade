@@ -9,6 +9,21 @@ block content
       span at #{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
       | 
       | (조회수 #{post.read})
+    p 
+      b 도시 : #{post.city}
+    p 
+      div 주소 : #{post.address}
+    p
+      div 이용가격 : #{post.fee} 
+    p
+      div 편의시설 : #{post.convenient}
+    p
+      div 이용규칙 : #{post.rule}
+
     p.well(style='white-space:pre;')= post.content
     
     a.btn.btn-default(href='/posts') 목록
+    | 
+    a.btn.btn-default(href='/posts/#{post.id}/edit') 수정
+    | 
+    a.btn.btn-default(href='/posts/#{post._id}?_method=DELETE') 삭제
