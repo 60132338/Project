@@ -31,6 +31,19 @@ function validateForm(form) {
     return null;
 }
 
+router.get('/:id/show',function(req,res,next){
+    Post.findById(req.params.id,function(err,post){
+        if(err){
+            return next(err);
+        }
+        Reserve.findOne({title:post.title},function(err,reserve){
+            if(err){
+                return next(err);
+            }
+            res.render('reserves/show',{post:post, reserve:reserve});
+        });
+    });
+});
 
 router.get('/:id', needAuth, function (req, res, next) {
     User.findById(req.user, function (err, user) {

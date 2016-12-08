@@ -16,6 +16,8 @@ block content
     p
       div 이용가격 : #{post.fee} 
     p
+      div 숙박가능인원 : #{post.people} 
+    p
       div 편의시설 : #{post.convenient}
     p
       div 이용규칙 : #{post.rule}
@@ -25,7 +27,7 @@ block content
     a.btn.btn-default(href='/posts') 목록
 
     if(post.reservation === '예약가능')
-        a.btn.btn-default(href='/reserves/#{post._id}/') 예약하기
+        a.btn.btn-default(href='/reserves/#{post.id}/') 예약하기
     else
-        a.btn.btn-default(href='/reserves/#{post._id}/show') 예약보기
+        a.btn.btn-default(href='/reserves/#{post.id}/show') 예약보기
     
