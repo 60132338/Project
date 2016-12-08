@@ -14,4 +14,3 @@ var schema = new Schema({
 var User = mongoose.model('User', schema);
 
 module.exports = User;
-//이메일 암호 제목 content 날짜 시간

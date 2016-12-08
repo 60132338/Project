@@ -25,12 +25,10 @@ function validateForm(form) {
     var title = form.title || "";
     var city = form.city || "";
     var address = form.address || "";
-    var fee = form.fee || "";
 
     title = title.trim();
     city = city.trim();
     address = address.trim();
-    fee = fee.trim();
 
     if (!title) {
         return '이름을 입력해주세요.';
@@ -40,9 +38,6 @@ function validateForm(form) {
     }
     if(!address){
         return '주소를 입력해주세요.';
-    }
-    if(!fee){
-        return '요금을 입력해주세요.';
     }
 
     return null;
@@ -55,6 +50,15 @@ router.get('/', function (req, res, next) {
             return next(err);
         }
         res.render('posts/index', { posts: posts });
+    });
+});
+
+router.post('/search',function(req,res,next){
+    Post.find({city:req.body.search},function(err,posts){
+        if(err){
+            return next(err);
+        }
+        res.render('posts/index',{posts:posts});
     });
 });
 
@@ -100,7 +104,7 @@ router.post('/', function (req, res, next) {
 });
 
 /** 게시물 수정 */
-router.get('/:id/edit', function (req, res, next) {
+router.get('/:id/edit', needAuth ,function (req, res, next) {
     Post.findById(req.params.id, function (err, post) {
         if (err) {
             return next(err);
@@ -143,13 +147,13 @@ router.put('/:id', function (req, res, next) {
 });
 
 /** 게시물 삭제 */
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', needAuth, function (req, res, next) {
     Post.findOneAndRemove({ _id: req.params.id }, function (err) {
         if (err) {
             return next(err);
         }
         //res.flash('success', '게시물이 삭제되었습니다.');
-        res.redirect('/posts');
+        res.redirect('back');
     });
 });
 

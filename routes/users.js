@@ -1,4 +1,5 @@
 var express = require('express'),
+    Post = require('../models/Post'),
     User = require('../models/User');
 var router = express.Router();
 
@@ -120,7 +121,13 @@ router.get('/:id', function(req, res, next) {
     if (err) {
       return next(err);
     }
-    res.render('users/show', {user: user});
+    Post.find({email:user.email},function(err, posts){
+      if(err){
+        return next(err);
+      }
+      res.render('users/show', {posts:posts,user:user});
+    });
+    //res.render('users/show', {user: user});
   });
 });
 

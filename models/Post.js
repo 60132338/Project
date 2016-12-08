@@ -7,7 +7,7 @@ var schema = new Schema({
     title: {type: String, required: true, trim: true}, //제목
     city: {type: String, required:true, trim: true}, //도시
     address: {type: String, required:true, trim: true}, //주소
-    fee: {type: Number, required:true, trim: true}, //숙소요금
+    fee: {type: Number, required:true, default: 0}, //숙소요금
     convenient: {type: String, required: true, trim: true},//편의시설
     content: {type: String, required: true}, // 간단한 설명
     rule: {type: String, required: true}, //이용규칙

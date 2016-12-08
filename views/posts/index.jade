@@ -1,10 +1,22 @@
 extends ../layout
 
 block content
+
   .container
-    h1.page-header List
+    h1.page-header 숙소 목록
     
- 
+    form(action="/posts/search", method='POST')
+      .row
+        .col-md-6
+          .input-group
+            input(type="text",name='search',id='search', class="form-control" placeholder="Search...")
+            span.input-group-btn
+              button.btn.btn-default(type="submit" ) 검색
+              a.btn.btn-primary(href='/posts/') 전체보기
+              
+    br
+    br
+
     table.table.table-bordered
       thead
         tr
