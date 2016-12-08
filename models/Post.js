@@ -9,6 +9,7 @@ var schema = new Schema({
     address: {type: String, required:true, trim: true}, //주소
     fee: {type: Number, required:true, default: 0}, //숙소요금
     convenient: {type: String, required: true, trim: true},//편의시설
+    reservation: {type:String, default:"예약가능"},
     content: {type: String, required: true}, // 간단한 설명
     rule: {type: String, required: true}, //이용규칙
     read: {type: Number, default: 0}, // 조회수

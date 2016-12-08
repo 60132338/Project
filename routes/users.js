@@ -127,7 +127,6 @@ router.get('/:id', function(req, res, next) {
       }
       res.render('users/show', {posts:posts,user:user});
     });
-    //res.render('users/show', {user: user});
   });
 });
 

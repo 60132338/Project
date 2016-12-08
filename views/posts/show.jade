@@ -24,4 +24,8 @@ block content
     
     a.btn.btn-default(href='/posts') 목록
 
-    a.btn.btn-default(href='') 예약하기
+    if(post.reservation === '예약가능')
+        a.btn.btn-default(href='/reserves/#{post._id}/') 예약하기
+    else
+        a.btn.btn-default(href='/reserves/#{post._id}/show') 예약보기
+    

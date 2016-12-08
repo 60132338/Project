@@ -7,6 +7,8 @@ block content
     ul
       li 이름: #{user.name}
       li 이메일: #{user.email}
+    br
+    hr
     table.table.table-bordered
       thead
         tr
@@ -14,6 +16,7 @@ block content
           th 도시
           th 숙소요금
           th 조회수
+          th 예약현황
           th
       tbody
         each post in posts
@@ -23,10 +26,12 @@ block content
             td= post.city
             td= post.fee
             td= post.read
+            td= post.reservation
             td
               a.btn.btn-xs.btn-default(href='/posts/#{post.id}/edit') 수정
               | 
               a.btn.btn-xs.btn-default(href='/posts/#{post._id}?_method=DELETE') 삭제
+              
               
     hr
     p

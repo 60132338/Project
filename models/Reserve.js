@@ -4,9 +4,11 @@ var mongoose = require('mongoose'),
 var schema = new Schema({
   useremail: {type:String, required:true, trim:true},
   hostemail: {type:String, required:true, trim:true},
-  postid: {type:String, required:true, trim:true},
-  title: {type:String, required:true},
+  title: {type:String, required:true, trim:true, unique:true},
+  name: {type:String, required:true, trim:true}, // 예약자 이름
+  people: {type:Number, required:true}, 
   address: {type:String, required:true},
+  content: {type:String, required:true},
   fromDate: {type:Date},
   toDate: {type:Date},
   createdAt: {type:Date, default: Date.now}
