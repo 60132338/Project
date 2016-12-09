@@ -45,6 +45,45 @@ router.get('/:id/show',function(req,res,next){
     });
 });
 
+router.get('/:id/list',needAuth, function (req, res, next) {
+    Reserve.find({ hostemail: req.session.user.email }, function (err, reserves) {
+        if (err) {
+            return next(err);
+        }
+        Post.findOne({title:reserves.title},function(err,post){
+            if(err){
+                return next(err);
+            }
+            res.render('reserves/list', { reserves: reserves, post:post });
+        });
+        
+    });
+});
+
+router.get('/:id/finish',function(req,res,next){
+    Reserve.findById(req.params.id,function(err,reserve){
+        if(err){
+            return next(err);
+        }
+        Post.findOne({title:reserve.title},function(err,post){
+            if(err){
+                return next(err);
+            }
+            if(post.reservation === '예약완료'){
+                req.flash('danger','이미 확정하셨습니다.');
+                res.redirect('back');
+            }
+            post.reservation = "예약완료";
+            post.save(function(err){
+                if(err){
+                    return next(err);
+                }
+                res.redirect('/posts');
+            });
+        });
+    });
+});
+
 router.get('/:id', needAuth, function (req, res, next) {
     User.findById(req.user, function (err, user) {
         if (err) {
@@ -53,6 +92,10 @@ router.get('/:id', needAuth, function (req, res, next) {
         Post.findById(req.params.id, function (err, post) {
             if (err) {
                 return next(err);
+            }
+            if(req.session.user.email === post.email){
+                req.flash('danger','자신의 방입니다.');
+                res.redirect('back');
             }
             if (post.reservation === '예약중' || post.reservation === '예약완료') {
                 req.flash('danger', '예약중입니다.');
@@ -105,5 +148,28 @@ router.post('/:id', function (req, res, next) {
     });
 });
 
-
+router.delete('/:id', needAuth, function (req, res, next) {
+    Reserve.findById(req.params.id, function(err,reserve){
+        if(err){
+            return next(err);
+        }
+        Post.findOne({title:reserve.title},function(err,post){
+            if(err){
+                return next(err);
+            }
+            post.reservation = "예약가능";
+            post.save(function(err){
+                if(err){
+                    return next(err);
+                }
+            });
+        });
+        Reserve.findByIdAndRemove(reserve._id, function(err){
+            if(err){
+                return next(err);
+            }
+            res.redirect('back');
+        });
+    });
+});
 module.exports = router;
