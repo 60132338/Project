@@ -45,6 +45,25 @@ router.get('/:id/show',function(req,res,next){
     });
 });
 
+router.get('/:id/index',needAuth,function(req,res,next){
+    User.findById(req.params.id,function(err,user){
+        if(err){
+            return next(err);
+        }
+        Reserve.find({useremail:user.email},function(err,reserves){
+            if(err){
+                return next(err);
+            }
+            Post.find({title:reserves.title},function(err,posts){
+                if(err){
+                    return next(err);
+                }
+                res.render('reserves/index',{reserves:reserves, posts:posts});
+            });
+        });
+    });
+});
+
 router.get('/:id/list',needAuth, function (req, res, next) {
     Reserve.find({ hostemail: req.session.user.email }, function (err, reserves) {
         if (err) {

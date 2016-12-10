@@ -24,6 +24,7 @@ block content
           th 도시
           th 숙소요금
           th 조회수
+          th 예약상태
       tbody
         each post in posts
           tr
@@ -32,6 +33,7 @@ block content
             td= post.city
             td= post.fee
             td= post.read
+            td= post.reservation
             //- td
               a.btn.btn-xs.btn-default(href='/posts/#{post.id}/edit') 수정
               | 

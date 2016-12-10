@@ -9,6 +9,7 @@ block content
       li 이메일: #{user.email}
     br
     hr
+    h4 호스팅목록
     table.table.table-bordered
       thead
         tr
@@ -30,9 +31,7 @@ block content
             td
               a.btn.btn-xs.btn-default(href='/posts/#{post.id}/edit') 수정
               | 
-              a.btn.btn-xs.btn-default(href='/posts/#{post._id}?_method=DELETE') 삭제
-              
-              
+              a.btn.btn-xs.btn-default(href='/posts/#{post._id}?_method=DELETE') 삭제      
     hr
     p
       if(currentUser === 'root@root.com')
@@ -40,6 +39,8 @@ block content
       | 
       a.btn.btn-default(href='/users/#{user._id}/edit') 수정
       | 
-      a.btn.btn-default(href='/reserves/#{user._id}/list') 예약목록
+      a.btn.btn-default(href='/reserves/#{user._id}/list') 내방예약현황
       | 
-      a.btn.btn-default(href='/users/#{user._id}?_method=DELETE') 삭제
+      a.btn.btn-default(href='/reserves/#{user._id}/index') 나의예약현황
+      | 
+      a.btn.btn-default(href='/users/#{user._id}?_method=DELETE') 계정삭제
