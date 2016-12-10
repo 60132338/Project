@@ -5,7 +5,7 @@ var express = require('express'),
 var router = express.Router();
 
 function needAuth(req, res, next) {
-    if (req.session.user) {
+    if (req.isAuthenticated()) {
       next();
     } else {
       req.flash('danger', '로그인이 필요합니다.');
@@ -58,6 +58,7 @@ router.get('/:id/index',needAuth,function(req,res,next){
                 if(err){
                     return next(err);
                 }
+
                 res.render('reserves/index',{reserves:reserves, posts:posts});
             });
         });
@@ -65,7 +66,7 @@ router.get('/:id/index',needAuth,function(req,res,next){
 });
 
 router.get('/:id/list',needAuth, function (req, res, next) {
-    Reserve.find({ hostemail: req.session.user.email }, function (err, reserves) {
+    Reserve.find({ hostemail: req.user.email }, function (err, reserves) {
         if (err) {
             return next(err);
         }
@@ -112,7 +113,7 @@ router.get('/:id', needAuth, function (req, res, next) {
             if (err) {
                 return next(err);
             }
-            if(req.session.user.email === post.email){
+            if(req.user.email === post.email){
                 req.flash('danger','자신의 방입니다.');
                 res.redirect('back');
             }
@@ -144,9 +145,9 @@ router.post('/:id', function (req, res, next) {
         });
         
         var NewReserve = new Reserve({
-            useremail: req.session.user.email,
+            useremail: req.user.email,
             hostemail: post.email,
-            name: req.session.user.name,
+            name: req.user.name,
             title: post.title,
             people: req.body.people,
             address: post.address,

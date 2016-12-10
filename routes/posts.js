@@ -4,7 +4,7 @@ var express = require('express'),
 var router = express.Router();
 
 function needAuth(req, res, next) {
-    if (req.session.user) {
+    if (req.isAuthenticated()) {
       next();
     } else {
       req.flash('danger', '로그인이 필요합니다.');
@@ -83,7 +83,7 @@ router.post('/', function (req, res, next) {
         }
         var createPost = new Post({
             title: req.body.title,
-            email: req.session.user.email,
+            email: req.user.email,
             city: req.body.city,
             address: req.body.address,
             fee: req.body.fee,
