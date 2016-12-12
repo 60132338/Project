@@ -16,7 +16,11 @@ block content
         input.form-control(type='text', id='city', name='city', placeholder='city', value=post.city)
       .form-group
         label(for='address') 주소
-        input.form-control(type='text', id='address', name='address', placeholder='address', value=post.address)
+        input(type="text", id="postcode", placeholder="우편번호", name='postcode', value=post.postcode)
+        input(type="button", onclick="execDaumPostcode()", value="우편번호 찾기")
+        br
+        input.form-control.col-md-6(type="text", id="address", placeholder="주소", name='address', value=post.address)
+        input.form-control.col-md-6(type="text", id="address2", placeholder="상세주소", name='address2', value=post.address2)
       .form-group
         label(for='fee') 숙소요금
         input.form-control(type='number', id='fee', name='fee', placeholder='fee', value=post.fee)
@@ -34,3 +38,6 @@ block content
         a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
         | 
         button.btn.btn-primary(type='submit') 완료
+
+
+  script(type='text/javascript', src='/javascripts/address.js')

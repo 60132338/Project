@@ -18,8 +18,13 @@ schema.methods.generateHash = function(password) {
   return bcrypt.hashSync(password, salt);
 };
 
-schema.methods.validatePassword = function(password) {
-  return bcrypt.compareSync(password, this.password);
+schema.methods.validatePassword = function(password1) {
+  //return bcrypt.compareSync(password1, this.password);
+  if (this.password === password1){
+    return true;
+  }else {
+    return false;
+  }
 };
 
 var User = mongoose.model('User', schema);

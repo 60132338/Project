@@ -4,12 +4,16 @@ html(lang='ko')
     block title
       title AirBnB
     meta(charset='UTF-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap-theme.css')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet', href='/bower_components/font-awesome/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(type='text/javascript', src='/bower_components/jquery/dist/jquery.js')
     script(type='text/javascript', src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(type='text/javascript', src='https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js')
+    script(type='text/javascript', src='http://dmaps.daum.net/map_js_init/postcode.v2.js')
+    script(type='text/javascript', src='/javascripts/address.js')
   body
     block top-nav
       include ./includes/topnav

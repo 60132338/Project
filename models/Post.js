@@ -6,7 +6,9 @@ var schema = new Schema({
     
     title: {type: String, required: true, trim: true}, //제목
     city: {type: String, required:true, trim: true}, //도시
-    address: {type: String, required:true, trim: true}, //주소
+    address: {type: String, required:true}, //주소
+    address2: {type: String, required:true},
+    postcode: {type: String, required:true},
     fee: {type: Number, required:true, default: 0}, //숙소요금
     convenient: {type: String, required: true, trim: true},//편의시설
     reservation: {type:String, default:"예약가능"},

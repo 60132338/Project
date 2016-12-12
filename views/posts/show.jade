@@ -2,29 +2,34 @@ extends ../layout
 
 block content
   .container
-    h1.page-header= post.title
-    p
-      b by #{post.email}
-      | 
-      span at #{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
-      | 
-      | (조회수 #{post.read})
-    p 
-      b 도시 : #{post.city}
-    p 
-      div 주소 : #{post.address}
-    p
-      div 이용가격 : #{post.fee} 
-    p
-      div 숙박가능인원 : #{post.people} 
-    p
-      div 예약현황 : #{post.reservation}
-    p
-      div 편의시설 : #{post.convenient}
-    p
-      div 이용규칙 : #{post.rule}
+    .col-md-12
+      h1.page-header= post.title
+      p
+        b by #{post.email}
+        | 
+        span at #{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+        | 
+        | (조회수 #{post.read})
 
-    p.well(style='white-space:pre;')= post.content
+    .col-md-12
+      p 
+        b 도시 : #{post.city}
+      p 
+        div 주소 : #{post.address} #{post.address2}
+      p
+        div(id="map" style="width:100%;height:500px;")
+      p
+        div 이용가격 : #{post.fee} 
+      p
+        div 숙박가능인원 : #{post.people} 
+      p
+        div 예약현황 : #{post.reservation}
+      p
+        div 편의시설 : #{post.convenient}
+      p
+        div 이용규칙 : #{post.rule}
+
+      p.well(style='white-space:pre;')= post.content
     
     a.btn.btn-default(href='/posts') 목록
 
@@ -33,3 +38,32 @@ block content
     else
         a.btn.btn-default(href='/reserves/#{post.id}/show') 예약보기
     
+    script(type='text/javascript', src='//apis.daum.net/maps/maps3.js?apikey=77c5cea33248ce94e290f01dbff9e159&libraries=services')
+    script.
+      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+      mapOption = {
+        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+      };  
+      var map = new daum.maps.Map(mapContainer, mapOption); //지도 생성 및 객체 리턴
+      // 주소-좌표 변환 객체를 생성합니다
+      var geocoder = new daum.maps.services.Geocoder();
+      // 주소로 좌표를 검색합니다
+      geocoder.addr2coord('#{post.address}', function(status, result) {
+          // 정상적으로 검색이 완료됐으면 
+          if (status === daum.maps.services.Status.OK) {
+              var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+              // 결과값으로 받은 위치를 마커로 표시합니다
+              var marker = new daum.maps.Marker({
+                  map: map,
+                  position: coords
+              });
+              // 인포윈도우로 장소에 대한 설명을 표시합니다
+               var infowindow = new daum.maps.InfoWindow({
+                   content: '<div style="width:150px;text-align:center;padding:6px 0;">#{post.title}</div>'
+               });
+               infowindow.open(map, marker);
+              // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+              map.setCenter(coords);
+          } 
+      });

@@ -86,6 +86,8 @@ router.post('/', function (req, res, next) {
             email: req.user.email,
             city: req.body.city,
             address: req.body.address,
+            address2: req.body.address2,
+            postcode: req.body.postcode,
             fee: req.body.fee,
             convenient: req.body.convenient,
             rule: req.body.rule,
